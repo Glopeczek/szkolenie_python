@@ -1,4 +1,4 @@
-# bolki warunkowe
+# bloki warunkowe
 # kolor = "biały"
 # if kolor == "różowy":
 #     print("SUPER!")
