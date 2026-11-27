@@ -1,0 +1,42 @@
+from prettytable import PrettyTable as pt
+
+from dane_zdarzenia import zdarzenia
+i=0
+minor=0
+serious=0
+lotniska={}
+typy={}
+for krotka in zdarzenia:
+    if zdarzenia[i][3]=="minor":
+        minor+=1
+    elif zdarzenia[i][3]=="serious":
+        serious+=1
+    if zdarzenia[i][1] not in lotniska:
+        lotniska[zdarzenia[i][1]]=[0,0]
+    lotniska[zdarzenia[i][1]][0]+=1
+    if zdarzenia[i][3]=="serious":
+        lotniska[zdarzenia[i][1]][1]+=1
+
+    if zdarzenia[i][2] not in typy:
+        typy[zdarzenia[i][2]]=0
+    typy[zdarzenia[i][2]]+=1
+    i+=1
+tabelka=pt(["Ogółem","Minor",'Serious'])
+tabelka.add_row([i,minor,serious])
+print(tabelka)
+i=0
+tabelka1=pt(['Lotnisko','Ogół','Serious','Minor','Risk'])
+for lotnisko in lotniska:
+    minor=lotniska[lotnisko][0]-lotniska[lotnisko][1]
+    risk=round(lotniska[lotnisko][1]/lotniska[lotnisko][0]*100,1)
+    tabelka1.add_row([lotnisko,lotniska[lotnisko][0],lotniska[lotnisko][1],minor,f'{risk}%'])
+    i+=1
+print(tabelka1)
+
+tabelka2=pt(['zdarzenie','ilość'])
+for zdarzenie in typy:
+    tabelka2.add_row([zdarzenie,typy[zdarzenie]])
+print(tabelka2)
+
+#kortki można otowrzyć też poprzez for data,icao,awaria,waga,model in zdarzenia - czytelniejsze!!!!!!!
+    
